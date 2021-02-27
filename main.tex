@@ -1,7 +1,14 @@
-\documentclass[whitelogo]{tudelft-report}
+\documentclass[whitelogo,nativefonts,roman]{tudelft-report}
 \usepackage{natbib}
 \usepackage{changes}
+% Import after graphicx, tikz, calc, ifthen, xkeyval, xcolor
+\usepackage{todonotes}
 \begin{document}
+
+% Red text to signify open issues with the report
+\newcommand\issue[1]{\textcolor{red}{#1}}
+% Wikipedia-style "citation needed" macro
+\newcommand{\citeneeded}[1][]{\textsuperscript{\color{blue} [citation needed: #1]}}
 
 %% Use Roman numerals for the page numbers of the title pages and table of
 %% contents.
@@ -50,22 +57,28 @@
 %% Include an optional title page.
 \input{title/title}
 
+\input{abstract/abstract}
+
 \input{preface/preface}
 
 \tableofcontents
+
+% \listoftodos
 
 %% Use Arabic numerals for the page numbers of the chapters.
 \mainmatter
 
 \input{chapters/chapter-1}
 \input{chapters/chapter-2}
+\input{chapters/chapter-3}
+\input{chapters/chapter-4}
 
 %% Use letters for the chapter numbers of the appendices.
 \appendix
 
 %\input{appendix-a}
 
-\bibliographystyle{plain}
+%\bibliographystyle{plain}
 \bibliography{bibliography}
 
 \end{document}
