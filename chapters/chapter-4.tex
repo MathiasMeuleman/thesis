@@ -1,0 +1,37 @@
+\chapter{Methodology}
+
+In this chapter we will lay out the work that was done for the measure detector. First we will cover the general structure of music scores and the assumptions made that follow from that structure. After that we will cover the implementation of the measure detector, followed by the evaluation of results.
+
+\section{Music scores}
+To understand the steps that need to be taken when implementing a measure detector, we first describe the general structure of a music score in this section. A music score consists of 
+
+\section{Measure detector}
+\subsection{Previous work}
+The segmenter currently embedded in the OMR pipeline is the one taken from the work of Waloschek, Hadjakos and Pacha [1]. Their approach consisted of manually annotating measures on pages of orchestral scores, defining a distance metric between annotated measures and training a CNN to detect measures in new input data. There are a few shortcomings to this approach. First of all, this model is far from perfect and makes too many mistakes to be used in a reasonable manner in this OMR pipeline. Even on pages that contain high quality scans and straight barlines, the detection is not perfect and therefore requires post-processing, see Figure 1 for two examples. Second, the measures that are detected are restricted to separation over time only. This means that when applying this to music scores with multiple instruments or voices -which is common in orchestral music, choir music, or piano scores- the segmenter will only segment horizontally, but leaves the different voicings grouped together in the same block. Besides this, the model is fixed and cannot be easily improved upon. Retraining the model to overcome the mistakes it currently makes would require manual annotation of these pages which is a very costly process. Finally, this model is relatively slow compared to other approaches.
+Figure 1: Two examples of errors of the CNN method. In the first example we see that a large part of the entire page is classified as a single measure, in the second examples we see that smaller subsections of measures are detected as measures.
+
+\subsection{Image processing based segmentation}
+To overcome these issues, another approach is currently under development. The main problem with the CNN approach is the supervised nature of it, requiring annotations which are costly to come by. Our algorithm takes an image processing approach, removing the requirement of annotated examples. The structure of a page is analysed top-down, first separating systems, which are subsequently segmented into vertical blocks, which are segmented into measures, as can be seen in Figure 2. This process is explained here in a little more detail.
+
+Before any segmentation is done, some preprocessing is performed on the page. The contrast of the page is maximized, after which the page is binarized. Next, any rotations in the page that might have occurred due to scanning of the original score is rectified. These are all standard preprocessing techniques in the image processing field.
+
+The first segmentation is on the system level. There is a high level of separation between systems on a page (there are no connected components between them), which allows for binary propagation. This binary propagation will fill up each of the systems, allowing for easy detection of one or a few large blocks on the page, each of which is a system.
+Figure 2: Structure of a music score
+
+Next, each of these systems are segmented into vertical blocks, making use of the horizontal intensity profile of the system. Due to the structure of music scores, each system will have barlines that span almost all of the systems height. These vertical lines are detected as peaks in the intensity profile, finding these peaks will provide the location where the system should be segmented into separate blocks. After this step, the output will be similar to the previous segmenter, which was only trained to segmented blocks.
+
+After the blocks have been segmented, each of these blocks are segmented into measures. There are currently two methods for this correction: a smallest intersection method, and a largest region method.
+
+\subsubsection{Smallest intersection method}
+The smallest intersection method works in two parts: first a set of baselines per system are established, and then these baselines are corrected for each individual block in that system. The baselines are established from the vertical intensity profile of the system. Each of the bars consist of 5 small peaks, corresponding to the 5 lines in a bar. These 5 peaks grouped together can be detected as one broader peak. The baselines are set as the middle points between each of these detected peaks. Next the baselines are corrected on a per block basis. This second step is necessary, since in the scores it can occur that notes and related annotations can cross an established baseline into the “territory” of measures above or below it. This crossing over can change per block, and therefore a correction per block is necessary. This second step finds within a predefined distance from the baseline the points with the lowest value in the intensity profile. These points indicate that when segmenting at these points, the least amount of information, indicated by white pixels, will be segmented, and therefore these points should be considered as good segmenting points. When finding these candidate points a small margin from the minimum intensity value is taken, and the point closest to the baseline is chosen as the segmenting point.
+
+\subsubsection{Largest region method}
+The largest region method divides the region in between two peaks into regions, where regions are separated from each other by intensity values above a certain threshold. The largest of these regions is taken, as this indicated the largest part between two measures where there is little to no information. The middle of this region is chosen as the segmenting point. In Figure 3 two examples are given of segmented pages using the image processing approach with the largest region method.
+
+Figure 3: Two examples of score pages segmented with the largest region method.    
+Evaluation
+The drawback of this image processing method is that performance of the segmenter is hard to evaluate. The CNN based method had in this respect the advantage of having annotated examples. Unfortunately, these examples are not applicable to evaluation of the image processing approach, since that segments a level deeper; where the CNN approach segments at the block level, the image processing approach segments at the measure level. Currently evaluation has to be done by hand because of the lack of a corpus of segmented music scores. A tool is under development that can hopefully make this process more efficient and over time can hopefully help to create a corpus of segmented measures.
+
+[1] Waloschek, S., Hadjakos, A., \& Pacha, A. (2019). Identification and Cross-Document Alignment of Measures in Music Score Images. In ISMIR (pp. 137-143).
+
+
