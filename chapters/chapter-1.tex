@@ -1,16 +1,16 @@
-\chapter{Introduction}
+\chapter{Introduction}\label{chap:introduction}
 
-\section{Optical Music Recognition}
+\section{Optical Music Recognition}\label{sec:introduction-OMR}
 Music has always been communicated in two ways: aural transmission, where music is played or performed and people can listen to it, and written transmission, where music is formalized in a document. These written formats come in many forms, one of which is western musical notation. These documents, mostly referred to as (music) scores, used to be handwritten, but were later printed on paper and can nowadays be found in digital format on computers, mostly as images or scans. Quite some effort has been taken to collect all of these digital scores and store them in central places or make them available to the public where possible. An example is the IMSLP library, where vast amounts of scores for classical music in the public domain are available. Collections such as these give rise to many opportunities, such as affordable scores and sheet music for musicians, or easy access to musical data for researchers. The formats in which these scores are stored do have their limitations however. When text is contained in PDF documents (or many other document forms for that matter), the text is recognized by the computer as text, meaning it can be searched, edited and reformatted. For music this is not the case. Scanned music scores are simply stored as images in PDF documents, meaning that none of the applications for text can be applied to these scores. This means that a lot of applications that the digital age provides cannot yet be applied to music scores and as such there is a huge gap for potential left open.
 
 The field of Optical Music Recognition (OMR) works toward solving this problem by finding methods that can translate the scanned formats to a format that can provide semantic meaning of the music scores to computers, so that these aforementioned applications can become available to the written music domain. Translating text from an image to computer-readable text has long been solved in the field of Optical Character Recognition (OCR)\citeneeded. Its musical counterpart however remains for a large part unsolved. A lot of this is due to the more complex structures we see in music scores. Where reading text is a single dimensional operation, classifying each character in a line of text, reading music is a two dimensional operation, where the dimensions are time on the horizontal axis and pitch on the vertical axis. Additionally, in music different symbols can be stacked on top of one another to signify multi-tones or chords, or can be connected horizontally to one another to improve readability for musicians. Two connected notes can also be translated relative to each other, meaning the connection can become stretched or tilted. Also there are symbol that are often small in comparison to the notes, but have significant meaning, such as dots, dashes and accents. \issue{Draw some examples} All of these illustrated cases can be combined and many of these combinations occur frequently in music scores, making it impossible to apply simple heuristics when translating music scores to a computer-understandable format. Many approaches have been taken to apply machine learning and end-to-end learning \citeneeded to this problem. There are promising results in there, but for a lot of use cases the translated music has to almost perfectly correspond to the original. 
 
 This is especially true for scores of classical music. Many classical scores are complex, and the scanned format of many of these scores are often hard to read because they are old editions or scanned in low quality. This, combined with the fact that there is a lot of classical music available in the public domain makes digitization in this computer-understandable format especially attractive for classical music.
 
-\section{TROMPA}
+\section{TROMPA}\label{sec:introduction-TROMPA}
 TROMPA (Towards Richer Online Music Public-domain Archives) is an international organization of scientists and scholars that push towards this goal of making more applications available to the music domain and increase engagement with classical music and music scores\citeneeded \issue{Some more info about TROMPA}. A group of researchers at Delft University of Technology is part of this organization. This group focusses on translating the scans of music scores into the MEI (Music Encoding Initiative) format, an XML-like format for music scores that allows computers to give semantic meaning to these scores\citeneeded. This process is far from perfect, and therefore research is currently ongoing in crowd computing solutions.
 
-\section{Crowd Sourced solutions}
+\section{Crowd Sourced solutions}\label{sec:introduction-crowd-sourced-solutions}
 Maybe the crowd can help out a bit
 
 \subsection{Struggles for crowd sourcing}
@@ -22,12 +22,12 @@ But maybe see if we can do without transcribing the same measure 100 times
 
 Also, if we could measure the complexity of a measure somewhat easily, this could help with prioritizing tasks
 
-\section{Research questions}
+\section{Research questions}\label{sec:introduction-research-questions}
 Main research question
 \begin{quote}
     \textit{How can we apply standard image processing methods to improve the process of transcribing orchestral music scores?}
 \end{quote}
 
-\section{Main contributions}
+\section{Main contributions}\label{sec:introduction-contributions}
 
-\section{Outline}
+\section{Outline}\label{sec:introduction-outline}

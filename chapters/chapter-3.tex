@@ -1,10 +1,31 @@
-\chapter{Data description}
+\chapter{Data description}\label{chap:data-description}
 
-As described before, for this work we want to focus on music scores for larger ensembles. In this section we will describe the requirements for this data and the way the data is collected.
+For this work, one of the focus points is music scores for larger ensembles. In this section we will describe the requirements for this data and the way the data is collected.
 
-\section{Requirements}
-The requirements of the data are somewhat foggy. \cite{Bainbridge2001}
+\section{Requirements}\label{sec:data-description-requirements}
+There are a few requirements we want to hold the data to. Mainly we want to focus on larger ensemble music scores. These can range from chamber music ensembles for five instruments to full sized symphnoy orchestras. Most of the music scores suited for ensembles of these sizes are typeset instead of handwritten, since these scores are generally made available by publishers. Although we limit ourselves to typeset sources, we want to make sure to include different typesets and fonts, which correspond with the types of music scores often worked with by ensembles. Furthermore we aim to include pieces from different time periods, since the composition of ensembles has been subject to change over the last centuries.
 
-\section{Aquisition}
-Aquisition was done through IMSLP
+\section{Aquisition}\label{sec:data-description-aquisition}
+Aquisition was done through IMSLP. Various music scores were chosen based on the criteria described above. Scores range from small ensembles to symphony orchestras, even including an orchestra with choir piece. We have included pieces from the classical and romantic eras. We also selected a piece that is written for orchestra and choir, to test if the approaches taken in this work can also extend to those applications. The selected pieces are shown in Table \ref{table:chosen-scores}. In this table we see the titles and composers of the pieces, as well as some characteristics of the pieces, such as ensemble composition, image quality and tightness (both from \citep{Byrd2015}).
+
+From all of the selected pieces, the highest quality score from IMSLP was selected. The pdf was split into single page PNG images with 300 dpi. Since we want to work with the musical contents only, the auxiliary pages that contain no music, such as covers, table of contents, additional explanations etcetera where discarded. The remaining images where binarized and saved as PNG once more.
+
+From all these pages the bounding boxes of the staves, the measures and the individual measures were found. For this task, first all systems, staffs and measures were manually counted for each page. The measure detector layed out in Chapter \ref{chap:measure-detector} was then run for each all the pages, and the amount of systems, staffs and measures was compared to the previously found amount. When these counts are equal, the correct positions of staffs and measures should be selected, assuming that the measure detector finds staffs and measures before it finds anything else. To verify this assumption, the found staffs and measures were overlayed on the pages and the result was manually checked. Pages which had missing or extraneous staffs or measures, or pages where the measure detector found objects besides staffs and measures first were manually corrected.
+
+The resulting dataset, containing the original PDFs, the binarized PNG images and the bounding box annotations in JSON format were made available through \issue{Insert Github link?}.o
+
+\begin{table}[ht]
+\begin{tabular}{lllrrr}
+\textbf{Title} & \textbf{Composer} & \textbf{Ensemble composition} & \textbf{\#Pages} & \textbf{Image quality} & \textbf{Tightness} \\
+Septett, opus 20     & Beethoven, L. van & Cl, Bs, Ho, Vl, Vo, Cl, Db                    & 40    &   &    \\
+La Mer               & Debussy, C.       & 3324-4331 + 2 Crn., strings, percussion, harp & 137   &   &    \\
+l'Apprenti Sorcier   & Dukas, P.         & 3234-4231 + 2 Crn., strings, percussion, harp & 74    &   &    \\
+Symphony No. 104     & Haydn, J.         & 2222-2200, strings, timpani                   & 62    &   &    \\
+Psalm 42             & Mendelssohn, F.   & 2222-2200, strings, timpani, choir, soprano   & 67    &   &    \\
+Symphony No. 31      & Mozart, W.A.      & 2222-2200, strings, timpani                   & 40    &   &    \\
+Symphony No. 4       & Schubert, F.      & 2222-4200, strings, timpani                   & 60    &   &    \\
+\end{tabular}
+\caption{List of selected music scores. }
+\label{table:chosen-scores}
+\end{table}
 
