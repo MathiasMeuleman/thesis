@@ -5,14 +5,14 @@
 \newif\if@nativefonts
 \newif\if@print
 \newif\if@roman
-%\newif\if@whitetitle
-% \newif\if@whitelogo
+\newif\if@whitetitle
+\newif\if@whitelogo
 \DeclareOption{roman}{\@romantrue}
 \DeclareOption{english}{\@englishtrue}
 \DeclareOption{nativefonts}{\@nativefontstrue}
 \DeclareOption{print}{\@printtrue}
-%\DeclareOption{whitetitle}{\@whitetitletrue}
-% \DeclareOption{whitelogo}{\@whitelogotrue}
+\DeclareOption{whitetitle}{\@whitetitletrue}
+\DeclareOption{whitelogo}{\@whitelogotrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ExecuteOptions{english}
 \ProcessOptions\relax
@@ -91,15 +91,15 @@
     %% as a fallback, since Utopia lacks support for sans-serif and monospace.
     \RequirePackage[T1]{fontenc}
     \RequirePackage[utf8]{inputenc}
-%    \RequirePackage{lmodern}
+    \RequirePackage{lmodern}
     \if@roman
-%      \RequirePackage{lato}
+      \RequirePackage{lato}
       \RequirePackage{helvet}
       \RequirePackage[thin]{roboto}
       \RequirePackage{fourier}
     \else
       \RequirePackage[thin]{roboto}
-%      \RequirePackage[default]{lato}
+      \RequirePackage[default]{lato}
       \RequirePackage{helvet}
       \renewcommand{\familydefault}{\sfdefault}
     \fi
@@ -122,18 +122,18 @@
         \def\chaptitlestyle{\sffamily\titleshape}
     \fi
 %    \def\largetitleshape{\upshape}
-%    \if@print
+    \if@print
     \def\titlestyle{\titlefont\titleshape}
-%    \else
-%        \def\titlestyle{\titlefont\titleshape}
-%        \def\sectitlestyle{\sffamily\titleshape\bfseries}
-%    \fi
-%    \def\titlestyle{\titlefont\titleshape\bfseries}
-%    \if@print
-%        \def\headerstyle{\titlefont\titleshape\bfseries}
-%    \else
+    \else
+        \def\titlestyle{\titlefont\titleshape}
+        \def\sectitlestyle{\sffamily\titleshape\bfseries}
+    \fi
+    \def\titlestyle{\titlefont\titleshape\bfseries}
+    \if@print
+        \def\headerstyle{\titlefont\titleshape\bfseries}
+    \else
         \def\headerstyle{\titlefont}
-%    \fi
+    \fi
 \else
     %% Apart from Bookman Old Style and Arial, we use Courier New for monospace
     %% and Cambria for math.
@@ -174,16 +174,16 @@
     \def\largetitleseries{}
     \def\largetitlestyle{\largetitlefont\largetitleseries\largetitleshape}
     \def\chaptitlefamily{\tudsffamily}
-%    \if@print
-%        \def\titlestyle{\titlefont\titleshape}
-%%        \def\largetitlestyle{\largetitlefont\titleshape\bfseries}
-%        \def\sectitlestyle{\tudsffamily\titleshape\bfseries}
-%    \else
+    \if@print
         \def\titlestyle{\titlefont\titleshape}
-%        \def\largetitlestyle{\largetitlefont\titleshape}
+        \def\largetitlestyle{\largetitlefont\titleshape\bfseries}
+        \def\sectitlestyle{\tudsffamily\titleshape\bfseries}
+    \else
+        \def\titlestyle{\titlefont\titleshape}
+        \def\largetitlestyle{\largetitlefont\titleshape}
         \def\sectitlestyle{\tudsffamily\titleshape\bfseries}
         \def\chaptitlestyle{\chaptitlefamily}
-%    \fi
+    \fi
     \def\headerstyle{\titlestyle}
 \fi
 
@@ -211,19 +211,19 @@
 \definecolor{tudelft-yellow}{cmyk}{0.02,0,0.54,0}
 
 \def\@pagecolor{tudelft-cyan}
-%\if@whitetitle
-%  \def\titlecolor{tudelft-white}
-%\else   
-%  \def\titlecolor{tudelft-black}
-%\fi
+\if@whitetitle
+  \def\titlecolor{tudelft-white}
+\else   
+  \def\titlecolor{tudelft-black}
+\fi
 
 %% Use TU Delft cyan as the color for titles, unless the 'print' option is
-%% specified. % JMT changed this: all titles black!
-% \if@print
+%% specified.
+\if@print
     \colorlet{title}{black}
-%\else
-%    \colorlet{title}{tudelft-cyan}
-%\fi
+\else
+    \colorlet{title}{tudelft-cyan}
+\fi
 
 %% We use A4 paper with slightly smaller margins than the default (scale = 0.7).
 \geometry{a4paper,hscale=0.75,vscale=0.8}
@@ -259,7 +259,6 @@
 %% cover. This text is inserted in a minipage environment and can therefore
 %% include line breaks.
 \newcommand\covertext[2][tudelft-white]{%
-%    \def\@subtitle{#1}%
     \def\@covertextcolor{#1}%
     \def\@cover@text{#2}}
 
