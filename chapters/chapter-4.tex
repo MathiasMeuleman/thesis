@@ -7,8 +7,8 @@ In this chapter we will lay out the work that was done for the measure detector.
 \begin{wrapfigure}{R}{0.5\textwidth}
     \includegraphics[width=0.5\textwidth]{images/score-structure.png}
     \centering
-    \label{fig:page-structure}
     \caption{Example structure of a page of music}
+    \label{fig:page-structure}
 \end{wrapfigure}
 
 To understand the steps that need to be taken when implementing a measure detector, we first describe the general structure of a music score in this section. Each page of a music score contains one or more sytems. A system can be defined as an excerpt of a full page, having all the voices or instruments synchronized in time. A system will span the total width of the page, minus page margins, and subsequent systems will be put one beneath the other, continuing on subsequent pages depending on space. Each system can be seen as a grid of voices and measures. The rows of this grid represent the voices, each voice has a single staff, and the columns represent the measures. Each cell in this grid we then define as an individual measure. Terminology on this can get a little ambiguous, since in general music practise the term measure is used interchangably for both columns and cells in this grid, since generally musicians will mostly work with individual parts instead of the whole score, which unifies both these concepts since the columns in these individual parts are only of size 1. For clarity from now on we will refer to the columns as system measures and to the cells as measures, since this is done in the literature as well (e.g. \citep{Zalkow2019}). An example of such a structure is given in Figure \ref{fig:page-structure}, where a system, staff, measure and individual measure are outlined on a page of music. From this example it is already clear that there is more content on a page of music than just this grid, but for our purposes, the definition as given above should suffice.
