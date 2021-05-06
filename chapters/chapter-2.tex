@@ -6,57 +6,6 @@
 When working with written music score data, there are a few datasets already available in the OMR field. Examples are the CVC-MUSCIMA \citep{Fornes2012} and its derivative, the MUSCIMA++ \citep{Hajic2017} for handwritten data, mainly aimed at staff line removal and symbol classification, and the MeasureBoundingBoxAnnotations dataset \citep{Zalkow2019}. Both the MUSCIMA++ and version 2 of the MeasureBoundingBoxAnnotations datasets have annotations for bounding boxes of individual measures.
 
 \section{Measure detectors}
-The segmenter currently embedded in the OMR pipeline is the one taken from the work of Waloschek, Hadjakos and Pacha [1]. Their approach consisted of manually annotating measures on pages of orchestral scores, defining a distance metric between annotated measures and training a CNN to detect measures in new input data. There are a few shortcomings to this approach. First of all, this model is far from perfect and makes too many mistakes to be used in a reasonable manner in this OMR pipeline. Even on pages that contain high quality scans and straight barlines, the detection is not perfect and therefore requires post-processing, see Figure 1 for two examples. Second, the measures that are detected are restricted to separation over time only. This means that when applying this to music scores with multiple instruments or voices -which is common in orchestral music, choir music, or piano scores- the segmenter will only segment horizontally, but leaves the different voicings grouped together in the same block. Besides this, the model is fixed and cannot be easily improved upon. Retraining the model to overcome the mistakes it currently makes would require manual annotation of these pages which is a very costly process. Finally, this model is relatively slow compared to other approaches. \issue{Insert mentions of \citep{Zalkow2019}}
-
-Figure 1: Two examples of errors of the CNN method. In the first example we see that a large part of the entire page is classified as a single measure, in the second examples we see that smaller subsections of measures are detected as measures.
-
-\section{Dynamic Time Warping}
-
-\section{Similarity finding}
-
-\section{Paper shorts}
-
-\subsection{OMR}
-\begin{itemize}
-    \item Bellini 2007 \citep{Bellini2007} Overview of state-of-the-art, with a call-to-action for more research. Attempts to provide more standard metrics for evaulation of OMR systems.
-    \item Bainbridge 2001 \citep{Bainbridge2001} Describes properties of music that make OMR a difficult task, review of OMR research pre-2000. Overview of sub-tasks for OMR pipeline (check if \citep{Rebelo2012} corresponds with this), with common solutions.
-    \item Rebelo 2012\citep{Rebelo2012} A more detailed outline of the different subtasks that are involved in OMR, with a large set of available research linked to those subtasks. \citep{}
-    \item Byrd 2015 \citep{Byrd2015} Set of definitions for complexity of music notation, set of performance metrics for page quality and score complexity, provides a small corpus of music as a baseline for a proper OMR testbed. 
-    \item Raphael 2011 \citep{Raphael2011} Presents a first version of an OMR system that 1) first segments a page into systems, system measures and individual measures, and 2) uses the measures as a basic unit for recognition. Recognition is divided into rigid symbols (clefs, rests, etc) and composite symbols (notes with stems, chords, beamed groups, etc). See also \citep{Chen2016}
-   \item Calvo-Zaragoza 2019 \citep{CalvoZaragoza2019} A paper that aims to be a primer in OMR. The authors argue that the OMR community is hurting from a lack of framework in which to work, missing clear task definitions and evaluation methods. It provides a taxonomy of OMR, and a taxonomy of OMR applications.
-\end{itemize}
-
-\subsection{Difficulties of OMR}
-\begin{itemize}
-    \item Bainbridge 2001 \citep{Bainbridge2001} 
-    \item Bellini 2007 \citep{Bellini2007}
-    \item Homenda 2006 \citep{Homenda2006} 
-    \item Fujinaga 1996 \citep{Fujinaga1996}
-    \item Byrd 2015 \citep{Byrd2015}
-\end{itemize}
-
-\subsection{OMR pipeline}
-\begin{itemize}
-    \item Bainbridge 2001 \citep{Bainbridge2001} 
-    \item Rebelo 2012 \citep{Rebelo2012} 
-\end{itemize}
-
-\subsection{Full-pipeline or end-to-end OMR}
-\begin{itemize}
-    \item Calvo-Zaragoza 2017 \citep{CalvoZaragoza2017} First attempt at end-to-end OMR. Using a convolutional recurrent nn with synthetically obtained monophonic scores with limited length and symbols. Classifies concurrent symbols, but lacks polyphonic and cross-symbol spanning elements, such as slurs, ties, text, etc.
-    \item Calvo-Zaragoza 2018 \citep{CalvoZaragoza2018} Builds upon previous paper, but now with a newly created dataset: PRiMuS. Results are quite good, but still limited to monophonic music, and there are some dubious claims in the conclusion: In previous paper the review of Rebelo et al. \citep{Rebelo2012} showed "results have not been very promising so far", however the task in this paper "can be solved succesfully using the considered ... approach". Also, claiming "performance comparable to that of commercial systems" after a "qualitative comparative study of selected examples" seems quite a stretch.
-    \item Wel 2017 \citep{Wel2017} Convolutional and recurrent nn that translates a line of sheet music to (pitch, duration) pairs. All data is monophonic, and the resulting format discards all markup, such as beamed note groups, stem direction etc.
-\end{itemize}
-
-\subsection{Human-aided OMR}
-\begin{itemize}
-    \item Petros 2020 \citep{Samiotis2020} Designing micro-tasks in such a way that crowd sourcing can be used on a highly varied crowd. User interaction is through Amazon Mechanical Turk, tasks are 1 to 3 measures long, and differ between providing the score, the audio, or both. Users were asked to compare two versions of the and indicate whether they are the same. \citep{Burghardt2017, Bellini2007, Chen2016, CalvoZaragoza2019}
-    \item Burghardt 2017 \citep{Burghardt2017} The Allegro system is a framework in which users can manually transcribe music scores. It was used to transcribe a collection of handwritten folk music that contains single melodic lines only. Includes references to crowd sourcing and OCR correction papers. \citep{Bainbridge2001, Bellini2007, Raphael2011, Rebelo2012}
-    \item Chen 2016 \citep{Chen2016} Human directed OMR takes an existing recognition engine and brings human input into the loop. In three stages, staff recognition, system identification and measure contents recognition, users are employed to correct errors made by the system by drawing fundamentels such as stems and notes, and labelling them manually.
-    \item Chen 2016(b) \citep{Chen2016b} Human interactive OMR system called Ceres that also employs human input, but works on a symbol-level instead of a measure-level. Users can add contraints to the system by identifying a pixel as a classified object, and the system re-recognizes the contents of a page within these constraints.
-\end{itemize}
-
-\subsection{OMR techniques}
 \begin{itemize}
     \item Otsu 1979 \citep{Otsu1979} binarization technique
 
@@ -68,20 +17,16 @@ Figure 1: Two examples of errors of the CNN method. In the first example we see 
 
     \item Vigliensoni 2013 \citep{Vigliensoni2013} Optical measure recognition technique described. Staff detection is taken from \citep{} and barline detection is developed by the authors.
 \end{itemize}
+%\textit{From Google Doc} The segmenter currently embedded in the OMR pipeline is the one taken from the work of Waloschek, Hadjakos and Pacha [1]. Their approach consisted of manually annotating measures on pages of orchestral scores, defining a distance metric between annotated measures and training a CNN to detect measures in new input data. There are a few shortcomings to this approach. First of all, this model is far from perfect and makes too many mistakes to be used in a reasonable manner in this OMR pipeline. Even on pages that contain high quality scans and straight barlines, the detection is not perfect and therefore requires post-processing, see Figure 1 for two examples. Second, the measures that are detected are restricted to separation over time only. This means that when applying this to music scores with multiple instruments or voices -which is common in orchestral music, choir music, or piano scores- the segmenter will only segment horizontally, but leaves the different voicings grouped together in the same block. Besides this, the model is fixed and cannot be easily improved upon. Retraining the model to overcome the mistakes it currently makes would require manual annotation of these pages which is a very costly process. Finally, this model is relatively slow compared to other approaches. \issue{Insert mentions of \citep{Zalkow2019}}
 
-\subsection{Clustering}
+\section{Dynamic Time Warping}
 \begin{itemize}
     \item Senin 2008 \citep{Senin2008} Dynamic Time Warping overview, basic algorithm, customizations and optimizations with some examples.
+\end{itemize}
+
+\section{Similarity finding / clustering}
+\begin{itemize}
     \item Niennattrakul 2006 \citep{Niennattrakul2006} Clustering multimedia data with time series. Comparing Euclidean and Dynamic Time Warping distances in a k-mediods clustering algorith.
     \item Niennattrakul 2007 \citep{Niennattrakul2007} Same topic as previous paper, but now showing why k-means is inferior to k-mediods clustering when using DTW measure as distance metric.
 \end{itemize}
 
-Computational musicology (music pattern recognition)
-
-OCR clustering?
-
-Alessio Bazzica
-
-
-\subsection{Crowd sourcing}
-\citep{Samiotis2020, Burghardt2017}
