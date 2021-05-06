@@ -2,19 +2,38 @@
 \usepackage{natbib}
 \usepackage{wrapfig}
 \usepackage{changes}
+\usepackage{enumitem}
+% \usepackage{musixtex}
 % Import after graphicx, tikz, calc, ifthen, xkeyval, xcolor
 \usepackage{todonotes}
+
+%% Research questions enumeration and referencing
+\newlist{questions}{enumerate}{2}
+\setlist[questions,1]{label=RQ\arabic*.,ref=RQ\arabic*}
+\setlist[questions,2]{lavel=(\alph*),ref=\thequestionsi(\alph*)}
 
 \graphicspath{ {./images/} }
 \begin{document}
 
-% Red text to signify open issues with the report
+%% Red text to signify open issues with the report
 \newcommand\issue[1]{\textcolor{red}{#1}}
-% Wikipedia-style "citation needed" macro
+%% Wikipedia-style "citation needed" macro
 \newcommand{\citeneeded}[1][]{\textsuperscript{\color{blue} [citation needed: #1]}}
 
-%% Use Roman numerals for the page numbers of the title pages and table of
-%% contents.
+%% Automatic 'page left blank intentionally'
+\newcommand*{\blankpage}{%
+\vspace*{\fill}
+{\centering\itshape This page intentionally left blank\par}
+\vspace{\fill}}
+\makeatletter
+\renewcommand*{\cleardoublepage}{\clearpage\if@twoside \ifodd\c@page\else
+\blankpage
+\thispagestyle{empty}
+\newpage
+\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother
+
+%% Use Roman numerals for the page numbers of the title pages and table of contents.
 \frontmatter
 
 %% Uncomment following 19 lines for a cover with a picture on the lower half only
